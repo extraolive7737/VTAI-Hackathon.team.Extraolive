@@ -1,6 +1,6 @@
-# Brain-Region Scam Text Filter
+# Region by Region: A Scam Text Filter That Shows Its Reasons
 
-> Working title. Veritas AI International High School Hackathon 2026.
+> Veritas AI International High School Hackathon 2026.
 > **Status: draft write-up. Sections marked TODO are not filled in yet and must be completed with our real results before the final submission.**
 
 **Track:** Finance
@@ -10,46 +10,55 @@ This project is a prototype and is not financial advice.
 
 ## The problem
 
-TODO (2-3 sentences): who gets these messages, and why it matters.
-Draft: People receive text messages that pretend to be a bank, a delivery service or a prize draw, and one tap on a link can cost them money. A plain "spam / not spam" label does not teach anyone what to look for next time.
+Older family members who are not used to smartphones get texts that pretend to be a delivery company, a bank or even their own child, and one tap on a link can cost them money. A plain "spam / not spam" label does not tell them what to look for next time.
+
+TODO: tighten to 2-3 sentences once the demo is fixed.
 
 ## What we built
 
-TODO: confirm after the demo runs end to end.
-Draft: A filter that takes one text message and gives back (1) a scam warning or a "looks fine" result and (2) the top three reasons, written as fixed template sentences filled in with checked numbers.
+A filter that takes one text message and gives back:
+
+1. a scam warning or a "looks fine" result, with a score, and
+2. the top three reasons, written as fixed template sentences. A reason only names words that are really in the message, and the score is checked to be between 0 and 1 before it is shown.
+
+TODO: paste one real input and output from the notebook.
 
 ## What we added
 
 We started from suggested project 4.2.1 (Scam text filter) in the Project Briefs. Our additions:
 
-1. **Our own question.** Does splitting the features into "brain regions" (one small model per feature group, combined by a meta-model) do better or worse than one single model on the same features? We report the answer either way.
-2. **Our own data.** TODO: a small set of Korean scam-style messages that we wrote ourselves (no real personal information), used only for testing, to see where a model trained on old English messages fails.
-3. **Explanations.** The filter says why it flagged a message, using the region scores and the strongest feature inside each region.
+1. **Our own question.** We split the features into "regions" (one small model per kind of warning sign, combined by a meta-model) so the filter can say which kind of sign it saw. What does that split cost in accuracy compared with one single model on the same features? We report the answer either way.
+2. **Our own data.** The training messages are more than ten years old. We wrote 40 new test messages ourselves (20 in the style of scams common in Korea today, 20 normal), in English, with no real names, numbers or links, and tested whether the filter catches them. These messages are never used for training or for choosing keywords.
+3. **Our own user.** The output is designed for an older family member: one clear warning and three short reasons.
 
 ## How it works
 
-**Data.** SMS Spam Collection: 5,574 English text messages labelled spam or ham. TODO: how we split it (stratified train/test) and anything we cleaned.
+**Data.** SMS Spam Collection: 5,574 English text messages labelled spam or ham. TODO: confirm the counts we loaded and the split (stratified 80% train, 20% test).
 
-**Model.**
+**Models.**
 
 - Baseline: label every message "not spam".
-- Reference model: TF-IDF + logistic regression (the brief's baseline recipe).
+- Reference model: TF-IDF + logistic regression (the brief's recipe).
 - Single model: one LightGBM on all hand-made features.
-- Region model: a router sends each feature group to its own LightGBM, and a logistic regression meta-model combines the region scores. The meta-model is trained on out-of-fold predictions only.
+- Region model: a router sends each feature group to its own LightGBM, and a logistic regression meta-model combines the region scores. The meta-model is trained only on out-of-fold predictions from the training set.
 
-Feature groups ("regions"), to be adjusted after looking at the data:
+**Regions.** Keyword lists are chosen from the training split only, before looking at any test data.
 
 | Region | What it counts |
 |---|---|
-| Money and reward | words such as free, prize, win, cash, claim |
+| Reward | words such as free, win, prize, cash, claim |
 | Urgency | words such as urgent, now, today, expires |
-| Call to action | words such as call, text, reply, click, links |
-| Personal and account details | words such as pin, account, bank, verify |
-| Message shape | length, digit count, share of capital letters |
+| Action | words such as call, text, reply, click, plus links and phone-like numbers |
+| Account | words such as account, bank, card, pin, verify |
+| Shape | length, digit count, share of capital letters, exclamation marks |
+
+The region idea is loosely inspired by how a brain routes signals to specialised areas. It is an engineering analogy, not a claim about neuroscience.
 
 ## Results
 
-All numbers below must come from test data the models did not see in training.
+All numbers come from data the models did not see in training.
+
+**Held-out test split of SMS Spam Collection**
 
 | Model | Accuracy | Spam precision | Spam recall |
 |---|---|---|---|
@@ -58,20 +67,28 @@ All numbers below must come from test data the models did not see in training.
 | Single LightGBM | TODO | TODO | TODO |
 | Region LightGBMs + meta-model | TODO | TODO | TODO |
 
+**Our 40 new messages**
+
+| Model | Scam-style caught (of 20) | False alarms (of 20 normal) |
+|---|---|---|
+| TF-IDF + logistic regression | TODO | TODO |
+| Single LightGBM | TODO | TODO |
+| Region LightGBMs + meta-model | TODO | TODO |
+
 **Where it fails.** TODO: five messages the model gets wrong, and why we think so.
 
-**Korean test messages.** TODO: how many we wrote, how many were caught, and what that tells us.
+**Limits.** The filter only reads English, because the public labelled data is English. Our 40 new messages were written by us, so they are a small check and not a measurement of real-world performance.
 
 ## What we'd do next
 
-TODO: one or two concrete next steps.
+TODO: one or two concrete next steps (for example, Korean training data).
 
 ## Sources
 
 Datasets
 
 - Almeida, T. & Hidalgo, J. (2011). SMS Spam Collection. UCI Machine Learning Repository. https://archive.ics.uci.edu/dataset/228/sms+spam+collection (DOI: https://doi.org/10.24432/C5CC84), licensed CC BY 4.0.
-- TODO: our own Korean test messages (written by the team, no personal information).
+- `data/modern_scam_test.csv`: 40 test messages written by the team for this project. TODO: add once the file is in the repository.
 
 Starting point
 
@@ -89,4 +106,4 @@ AI tools
 
 Pretrained models
 
-- None so far. TODO: update if this changes.
+- None.
