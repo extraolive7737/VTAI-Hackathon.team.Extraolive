@@ -147,7 +147,7 @@ They would not justify buying or selling because of the news mood, using this to
 
 ## Sources and licenses
 
-- Data: `Combined_News_DJIA.csv` from the "Daily News for Stock Market Prediction" dataset named in the Project Briefs, downloaded from this Kaggle copy: https://www.kaggle.com/datasets/goodenoughzhenlei/combined-news-djiacsv. DJIA price table `DJIA_table.csv`: TODO (where we downloaded it). The Kaggle page lists the license as "Unknown", so we use the data only for this non-commercial student project and do not copy the data files into this repository.
+- Data: `Combined_News_DJIA.csv` from the "Daily News for Stock Market Prediction" dataset named in the Project Briefs, and the DJIA price table `DJIA_table.csv`, both downloaded from this Kaggle copy: https://www.kaggle.com/datasets/goodenoughzhenlei/combined-news-djiacsv. The Kaggle page lists the license as "Unknown", so we use the data only for this non-commercial student project and do not copy the data files into this repository.
 - Sentiment model: FinBERT, `ProsusAI/finbert`, https://huggingface.co/ProsusAI/finbert. Model weights are licensed CC BY-NC-SA 4.0 (non-commercial, share-alike). We use the model unmodified, load it from Hugging Face at run time, and do not redistribute its weights. The model page lists its Financial PhraseBank training data as CC BY-NC-SA 3.0. Citation: Araci, D. (2019). FinBERT: Financial Sentiment Analysis with Pre-trained Language Models. arXiv:1908.10063.
 - Small language model (tested, not used in the final card): Qwen2.5-1.5B-Instruct, https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct, Apache License 2.0.
 - Libraries: LightGBM, pandas, NumPy, SciPy, scikit-learn, Matplotlib, Hugging Face Transformers, PyTorch.
