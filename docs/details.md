@@ -88,10 +88,7 @@ A note on the experiment log: in the stricter re-check of try 2, the 7 sentences
 
 ## Team
 
-| Person | Contribution |
-|---|---|
-| Jinwon Song | Chose the topic, user and data range; prepared the data; ran the Colab notebooks and checked every result; submitted the project |
-| Sangjun Ha | Labeled the 40 headlines (with ChatGPT's help); reviewed the write-up; wrote the demo video script |
+Jinwon Song and Sangjun Ha shared the work. We discussed every decision together before making it (the topic, the user, the data range, the models and what to report), ran the notebooks, checked the results and reviewed the write-up as a team. Sangjun Ha labeled the 40 headlines with help from ChatGPT.
 
 ## Licenses
 
